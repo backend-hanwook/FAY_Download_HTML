@@ -274,14 +274,14 @@
     fetch('./versions.json')
       .then(res => res.json())
       .then(versions => {
-        // 최신 버전 = 배열 첫 번째
-        const latest = versions[0];
+        // 최신 버전 = 배열 마지막
+        const latest = versions[versions.length - 1];
 
         document.getElementById('latest-badge').textContent = `v${latest.version} · Android`;
         document.getElementById('latest-btn').href = latest.link;
 
         const list = document.getElementById('version-list');
-        list.innerHTML = versions.map((v, i) => {
+        list.innerHTML = [...versions].reverse().map((v, i) => {
           const isLatest = i === 0;
           return `
             <a href="${v.link}" class="version-item ${isLatest ? 'latest' : ''}" target="_blank" rel="noopener noreferrer">
